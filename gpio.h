@@ -3,6 +3,17 @@
 
 #include "types.h"
 
+#define GPIO_REG_BASE		0x20200000
+
+#define GPIO_FUNC_INPUT 	0x0
+#define GPIO_FUNC_OUTPUT 	0x1
+#define GPIO_FUNC_ALT0		0x4
+#define GPIO_FUNC_ALT1		0x5
+#define GPIO_FUNC_ALT2		0x6
+#define GPIO_FUNC_ALT3		0x7
+#define GPIO_FUNC_ALT4		0x3
+#define GPIO_FUNC_ALT5		0x2
+
 typedef struct _GPIO_REG {
 	uint gpfSel[6];
 	uint res0;
@@ -42,5 +53,7 @@ typedef struct _GPIO_REG {
 	uint res11;
 	uint test;
 } GPIO_REG;
+
+#define gpio_regs ((GPIO_REG*)GPIO_REG_BASE)
 
 #endif
