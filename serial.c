@@ -2,12 +2,10 @@
 #include "serial.h"
 #include "gpio.h"
 
-UART1_REGS *uart_regs = 0x20201000;
-
 void serial_putc(uchar c)
 {
-	while (uart_regs->fr & (UART01x_FR_TXFF));
-	uart_regs->dr = (uint)c;
+	while (uart0_regs->fr & (UART01x_FR_TXFF));
+	uart0_regs->dr = (uint)c;
 }
 
 void uart_gpio_init()
@@ -48,16 +46,16 @@ void uart_init(uint baud)
 	frac = (temp >> 1) + (temp & 1);
 
 	/* Make sure the UART is disabled before we start */
-	uart_regs->cr = 0;
+	uart0_regs->cr = 0;
 
 	/* Set the baud rate */
-	uart_regs->ibrd = div;
-	uart_regs->fbrd = frac;
+	uart0_regs->ibrd = div;
+	uart0_regs->fbrd = frac;
 
 	/* Set the UART to 8n1, FIFO enabled */
-	uart_regs->lcrh = UART01x_LCRH_WLEN_8;
-	uart_regs->lcrh &= (uint)~UART01x_LCRH_FEN;
+	uart0_regs->lcrh = UART01x_LCRH_WLEN_8;
+	uart0_regs->lcrh &= (uint)~UART01x_LCRH_FEN;
 
 	/* Enable the UART */
-	uart_regs->cr = UART01x_CR_UARTEN | UART011_CR_TXE;
+	uart0_regs->cr = UART01x_CR_UARTEN | UART011_CR_TXE;
 }

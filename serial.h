@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#define UART0_REG_BASE 		(0x20201000)
+
 #define UART01x_FR_BUSY		(1 << 3)
 #define UART01x_FR_TXFF		0x020
 #define UART011_CR_CTSEN	0x8000	/* CTS hardware flow control */
@@ -37,7 +39,7 @@
 #define UART0_CLOCK     3000000
 #define UART_BAUD 	115200
 
-typedef struct _UART1_REGS {
+typedef struct _UART0_REGS {
 	uint dr;	// 0x00
 	uint rsrecr;	// 0x04
 	uint res0[0x4];	// 0x08 - 0x14
@@ -59,6 +61,8 @@ typedef struct _UART1_REGS {
 	uint itip;	// 0x84
 	uint itop;	// 0x88
 	uint tdr;	// 0x8c
-} UART1_REGS;
+} UART0_REGS;
+
+#define uart0_regs ((UART0_REGS*)UART0_REG_BASE)
 
 #endif	// End of SERIAL_H
